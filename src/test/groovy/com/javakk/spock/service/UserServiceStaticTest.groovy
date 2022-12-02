@@ -38,9 +38,21 @@ class UserServiceStaticTest extends Specification {
 
     def "GetUserByIdStatic"() {
         given: "设置请求参数"
-        def user1 = new UserDTO(id:1, name:"张三", province: "上海")
-        def user2 = new UserDTO(id:2, name:"李四", province: "江苏")
+        def user1 = new UserDTO(id: 1, name: "张三", province: "上海")
+        def user2 = new UserDTO(id: 2, name: "李四", province: "江苏")
         def idMap = ["birthday": "1992-09-18", "sex": "男", "age": "28"]
+        def rawInt = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+        def rawLong = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0L]
+        def set = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] as Set
+        def list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] as List
+
+        def hashset = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0] as HashSet
+        def minus = hashset - 2
+        println(minus)
+        def plus = minus << 2
+        print(plus)
+
+
 
         and: "mock掉接口返回的用户信息"
         dao.getUserInfo() >> [user1, user2]

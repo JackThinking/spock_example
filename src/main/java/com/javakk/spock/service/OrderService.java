@@ -2,7 +2,7 @@ package com.javakk.spock.service;
 
 import com.javakk.spock.dao.MoneyDAO;
 import com.javakk.spock.dao.OrderDao;
-import com.javakk.spock.mapper.OrderMapper;
+// import com.javakk.spock.mapper.OrderMapper;
 import com.javakk.spock.mapper.UserMapper;
 import com.javakk.spock.model.OrderDTO;
 import com.javakk.spock.model.OrderVO;
@@ -37,14 +37,15 @@ public class OrderService {
 
     /**
      * 多分支业务场景
+     *
      * @param userVO
      * @return
      */
-    public List<OrderVO> getUserOrders(UserVO userVO){
+    public List<OrderVO> getUserOrders(UserVO userVO) {
         List<OrderVO> orderList = new ArrayList<>();
         UserDTO userDTO = userMapper.toUserDTO(userVO); // VO转DTO
         List<OrderDTO> orders = orderDao.getOrderByUser(userDTO); // 根据用户信息获取订单列表
-        if (null == orders || orders.size() == 0){
+        if (null == orders || orders.size() == 0) {
             return orderList;
         }
         if (!"CNY".equals(userDTO.getCurrency())) { // 非人民币(外币)
@@ -63,7 +64,7 @@ public class OrderService {
                 OrderVO orderVO = new OrderVO();
                 orderVO.setOrderNum(orderDTO.getOrderNum());
                 orderVO.setAmount(orderDTO.getAmount());
-                if (orderConfig.isShowOrderTime()){ // 是否展示真实的订单创建时间
+                if (orderConfig.isShowOrderTime()) { // 是否展示真实的订单创建时间
                     orderVO.setCreateTime(orderDTO.getCreateTime());
                 } else {
                     orderVO.setCreateTime("****");
@@ -77,14 +78,15 @@ public class OrderService {
 
     /**
      * 静态方法多分支场景
+     *
      * @param userVO
      * @return
      */
-    public List<OrderVO> getUserOrdersBySource(UserVO userVO){
+    public List<OrderVO> getUserOrdersBySource(UserVO userVO) {
         List<OrderVO> orderList = new ArrayList<>();
         OrderVO order = new OrderVO();
         if ("APP".equals(HttpContextUtils.getCurrentSource())) { // 手机来源
-            if("CNY".equals(HttpContextUtils.getCurrentCurrency())){ // 人民币
+            if ("CNY".equals(HttpContextUtils.getCurrentCurrency())) { // 人民币
                 // TODO 针对App端的订单，并且请求币种为人民币的业务逻辑...
                 System.out.println("source -> APP, currency -> CNY");
             } else {
@@ -106,22 +108,23 @@ public class OrderService {
 
     /**
      * 静态final变量场景
+     *
      * @param orders
      * @return
      */
-    public List<OrderVO> convertUserOrders(List<OrderDTO> orders){
+    public List<OrderVO> convertUserOrders(List<OrderDTO> orders) {
         List<OrderVO> orderList = new ArrayList<>();
-        for (OrderDTO orderDTO : orders) {
-            OrderVO orderVO = OrderMapper.INSTANCE.convert(orderDTO); // VO DTO 属性转换
-            if (1 == orderVO.getType()) {
-                orderVO.setOrderDesc("App端订单");
-            } else if(2 == orderVO.getType()) {
-                orderVO.setOrderDesc("H5端订单");
-            } else if(3 == orderVO.getType()) {
-                orderVO.setOrderDesc("PC端订单");
-            }
-            orderList.add(orderVO);
-        }
+//        for (OrderDTO orderDTO : orders) {
+//            OrderVO orderVO = OrderMapper.INSTANCE.convert(orderDTO); // VO DTO 属性转换
+//            if (1 == orderVO.getType()) {
+//                orderVO.setOrderDesc("App端订单");
+//            } else if (2 == orderVO.getType()) {
+//                orderVO.setOrderDesc("H5端订单");
+//            } else if (3 == orderVO.getType()) {
+//                orderVO.setOrderDesc("PC端订单");
+//            }
+//            orderList.add(orderVO);
+//        }
         return orderList;
     }
 }

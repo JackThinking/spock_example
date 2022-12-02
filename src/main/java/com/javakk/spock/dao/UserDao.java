@@ -9,7 +9,11 @@ import java.util.List;
 @Repository
 public class UserDao {
 
-    public List<UserDTO> getUserInfo(){
+    public List<UserDTO> getUserInfo() {
+        return getUserInfoPrivate();
+    }
+
+    private List<UserDTO> getUserInfoPrivate() {
         // 模拟用户中心服务接口调用
         List<UserDTO> users = new ArrayList<>();
         UserDTO user = new UserDTO();
@@ -21,7 +25,8 @@ public class UserDao {
         return users;
     }
 
-    public boolean insertUser(UserDTO userDTO){
+
+    public boolean insertUser(UserDTO userDTO) {
         // 模拟数据库调用添加用户操作
         return true;
     }

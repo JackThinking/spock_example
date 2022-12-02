@@ -5,6 +5,12 @@ import com.javakk.spock.model.OrderVO
 import com.javakk.spock.model.UserDTO
 import com.javakk.spock.dao.UserDao
 import com.javakk.spock.model.UserVO
+import org.junit.runner.RunWith
+import org.powermock.api.mockito.PowerMockito
+import org.powermock.core.classloader.annotations.PrepareForTest
+import org.powermock.modules.junit4.PowerMockRunner
+import org.powermock.modules.junit4.PowerMockRunnerDelegate
+import org.spockframework.runtime.Sputnik
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -13,9 +19,12 @@ import spock.lang.Unroll
  * @author 公众号:Java老K
  * 个人博客:www.javakk.com
  */
+@RunWith(PowerMockRunner.class)
+@PowerMockRunnerDelegate(Sputnik.class)
+@PrepareForTest([UserDao.class])
 class UserServiceTest extends Specification {
     def userService = new UserService()
-    def userDao = Mock(UserDao)
+    def userDao = PowerMockito.mock(UserDao)
     def moneyDAO = Mock(MoneyDAO)
 
     void setup() {
@@ -25,11 +34,12 @@ class UserServiceTest extends Specification {
 
     def "GetUserById"() {
         given: "设置请求参数"
-        def user1 = new UserDTO(id:1, name:"张三", province: "上海")
-        def user2 = new UserDTO(id:2, name:"李四", province: "江苏")
+        def user1 = new UserDTO(id: 1, name: "张三", province: "上海")
+        def user2 = new UserDTO(id: 2, name: "李四", province: "江苏")
 
         and: "mock掉接口返回的用户信息"
-        userDao.getUserInfo() >> [user1, user2]
+        PowerMockito.when(userDao, "getUserInfoPrivate").thenReturn([user1, user2])
+        PowerMockito.when(userDao.getUserInfo()).thenCallRealMethod()
 
         when: "调用获取用户信息方法"
         def response = userService.getUserById(1)
@@ -57,19 +67,19 @@ class UserServiceTest extends Specification {
         }
 
         where: "表格方式验证用户信息的分支场景"
-        uid | users                         || postCodeResult | telephoneResult
+        uid | users                        || postCodeResult | telephoneResult
         1   | getUser("上海", "13866667777") || 200000         | "138****7777"
         1   | getUser("北京", "13811112222") || 100000         | "138****2222"
         2   | getUser("南京", "13833334444") || 0              | null
     }
 
-    def getUser(String province, String telephone){
+    def getUser(String province, String telephone) {
         return [new UserDTO(id: 1, name: "张三", province: province, telephone: telephone)]
     }
 
     def "测试void方法"() {
         given: "设置请求参数"
-        def userVO = new UserVO(name:"James", country: "美国")
+        def userVO = new UserVO(name: "James", country: "美国")
         userVO.userOrders = [new OrderVO(orderNum: "1", amount: 10000), new OrderVO(orderNum: "2", amount: 1000)]
 
         when: "调用设置订单金额的方法"
@@ -79,7 +89,7 @@ class UserServiceTest extends Specification {
         2 * moneyDAO.getExchangeByCountry(_) >> 0.1413 >> 0.1421
 
         and: "验证根据汇率计算后的金额结果是否正确"
-        with(userVO){
+        with(userVO) {
             userOrders[0].amount == 1413
             userOrders[1].amount == 142.1
         }
