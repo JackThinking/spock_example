@@ -38,6 +38,7 @@ events = ['WindowListener', 'ComponentListener']
 // Above list may be dynamic and may come from some input
 handler = { msgLabel.setText("$it") }
 for (event in events) {
+    // 利用反射的机制
     handlerImpl = handler.asType(Class.forName("java.awt.event.${event}"))
     frame."add${event}"(handlerImpl)
 }
