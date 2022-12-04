@@ -15,6 +15,7 @@ def tellFortunes(closure) {
     // We can curry to avoid sending date repeatedly
     // 科里化减少了一个入参，都用"09/20/2012"这个对象
     postFortune = closure.curry(date)
+    // 下面两个相当于执行了两次闭包函数
     postFortune "Your day is filled with ceremony"
     postFortune "They're features, not bugs"
 }
