@@ -13,6 +13,7 @@ what = new StringBuilder('fence')
 text = "The cow jumped over the $what"
 println text
 
+// 修改对象本身会生效
 what.replace(0, 5, "moon")
 println text
 println "//" + "END:EVALUATE_OUTPUT"
@@ -23,6 +24,7 @@ company = 'Google'
 quote = "Today $company stock closed at $price"
 println quote
 
+// 下面的遍历修改了引用，实际不会生效
 stocks = [Apple: 663.01, Microsoft: 30.95]
 
 stocks.each { key, value ->
