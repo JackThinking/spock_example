@@ -37,6 +37,8 @@ println "//" + "END:PROBLEM_OUTPUT"
 
 println "//" + "START:FIX1_OUTPUT"
 
+// 通过闭包的扩展点可以实现
+// 如果GString中包含的是一个闭包，而非变量，该闭包就会被调用。如果闭包接收一个参数，GString会把Writer对象当作一个参数发送给它
 companyClosure = { it.write(company) }
 priceClosure = { it.write("$price") }
 quote = "Today ${companyClosure} stock closed at ${priceClosure}"
@@ -50,8 +52,9 @@ println "//" + "END:FIX1_OUTPUT"
 
 println "//" + "START:FIX2_OUTPUT"
 
+// 如前文所述，如果闭包没有任何参数，可以去掉it参数，GString会使用我们返回的内容。
 companyClosure = { -> company }
-priceClosure = { -> price }
+priceClosure = { -> "$price" }
 quote = "Today ${companyClosure} stock closed at ${priceClosure}"
 stocks.each { key, value ->
     company = key
@@ -63,7 +66,8 @@ println "//" + "END:FIX2_OUTPUT"
 
 println "//" + "START:FIX_OUTPUT"
 
-quote = "Today ${-> company} stock closed at ${-> price}"
+// 不想单独定义闭包。对于这种简单情形，我们希望代码是自包含的
+quote = "Today ${-> company} stock closed at ${-> "$price"}"
 
 stocks.each { key, value ->
     company = key
