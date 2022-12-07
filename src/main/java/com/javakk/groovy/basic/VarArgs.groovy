@@ -1,4 +1,4 @@
-package com.javakk.groovy
+package com.javakk.groovy.basic
 
 /***
  * Excerpted from "Programming Groovy, 2nd Edition",

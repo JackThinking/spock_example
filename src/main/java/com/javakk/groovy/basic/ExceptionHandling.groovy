@@ -1,4 +1,4 @@
-package com.javakk.groovy
+package com.javakk.groovy.basic
 
 def openFile(fileName) {
     new FileInputStream(fileName)

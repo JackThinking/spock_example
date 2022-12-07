@@ -1,4 +1,4 @@
-package com.javakk.groovy.Generics
+package com.javakk.groovy.generics
 
 /***
  * Excerpted from "Programming Groovy, 2nd Edition",
