@@ -9,6 +9,7 @@ package com.javakk.groovy.collection
  * Visit http://www.pragmaticprogrammer.com/titles/vslg2 for more book information.
  ***/
 println "//" + "START:CREATEOUTPUT"
+// 默认是java.util.ArrayList
 lst = [1, 3, 4, 1, 8, 9, 2, 6]
 println lst
 println lst.getClass().name
@@ -20,10 +21,12 @@ println lst[lst.size() - 1]
 println "//" + "END:FETCH_ELEMENTSOUTPUT"
 
 println "//" + "START:INDEXOUTPUT"
+// index 支持取逆
 println lst[-1]
 println lst[-2]
 println "//" + "END:INDEXOUTPUT"
 
+// 支持 range
 println "//" + "START:RANGEOUTPUT"
 println lst[2..5]
 println "//" + "END:RANGEOUTPUT"
