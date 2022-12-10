@@ -19,6 +19,7 @@ println "//" + "END:INVOKEOUTPUT"
 
 println "//" + "START:RESPONDSTOOUTPUT"
 print "Does String respond to toUpperCase()? "
+// 查询是否支持该方法
 println String.metaClass.respondsTo(str, 'toUpperCase') ? 'yes' : 'no'
 
 print "Does String respond to compareTo(String)? "
