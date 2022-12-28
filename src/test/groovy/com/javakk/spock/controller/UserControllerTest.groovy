@@ -39,6 +39,7 @@ class UserControllerTest extends Specification {
 
     def getUser(errCode) {
         def user = new UserVO()
+        // 闭包修改外部引用！！！
         def condition1 = {
             user.name = "杜兰特"
         }
