@@ -53,7 +53,6 @@ class UserServiceStaticTest extends Specification {
         print(plus)
 
 
-
         and: "mock掉接口返回的用户信息"
         dao.getUserInfo() >> [user1, user2]
 

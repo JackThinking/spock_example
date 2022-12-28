@@ -67,7 +67,7 @@ class UserServiceTest extends Specification {
         }
 
         where: "表格方式验证用户信息的分支场景"
-        uid | users                        || postCodeResult | telephoneResult
+        uid | users                          || postCodeResult | telephoneResult
         1   | getUser("上海", "13866667777") || 200000         | "138****7777"
         1   | getUser("北京", "13811112222") || 100000         | "138****2222"
         2   | getUser("南京", "13833334444") || 0              | null
